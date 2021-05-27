@@ -1,0 +1,31 @@
+class Solution:
+    def findSubString(self, str):
+        hash1 = {}
+        k = len(set(str))
+        i = 0
+        j = 0
+        mn = 1000
+        while j<len(str):
+            hash1[str[j]] = hash1.get(str[j], 0) + 1
+            if len(hash1) <k:
+                j += 1
+            elif len(hash1) == k:
+                if str[i] in hash1:
+                    while hash1[str[i]] > 1:
+                        hash1[str[i]] -= 1
+                        i += 1
+                mn = min(mn, j-i+1)
+                j += 1
+            elif len(hash1) > k:
+                while len(hash1) >k:
+                    if str[i] in hash1:
+                        hash1[str[i]] -= 1
+                        if hash1[str[i]] == 0:
+                            del(hash1[str[i]])
+                    i += 1
+                j += 1 
+            
+            
+        return mn
+        #input - "AABBBCBBAC"
+        #output - 3
